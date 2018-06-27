@@ -33,7 +33,7 @@ namespace SocketClient
             serverStream.Flush();
 
             byte[] inStream = new byte[10025];
-            serverStream.Read(inStream, 0, inStream.Length);
+            serverStream.Read(inStream, 4, inStream.Length);
             string returndata = System.Text.Encoding.ASCII.GetString(inStream);
             msg(returndata);
             textBox2.Text = "";
