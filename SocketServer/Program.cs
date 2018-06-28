@@ -10,9 +10,11 @@ namespace SocketServer
     {
         private const int PORT = 100;
         private const int BUFFER_SIZE = 2048;
-        private static readonly byte[] buffer = new byte[BUFFER_SIZE];
-        private static readonly List<Socket> clientSockets = new List<Socket>();
-        private static readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        private static readonly byte[] Buffer = new byte[BUFFER_SIZE];
+        private static readonly List<Socket> ClientSockets = new List<Socket>();
+
+        private static readonly Socket ServerSocket =
+            new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         static void Main()
         {
@@ -25,21 +27,21 @@ namespace SocketServer
         private static void SetupServer()
         {
             Console.WriteLine("Setting up server...");
-            serverSocket.Bind(new IPEndPoint(IPAddress.Any, PORT));
-            serverSocket.Listen(0);
-            serverSocket.BeginAccept(AcceptCallback, null);
+            ServerSocket.Bind(new IPEndPoint(IPAddress.Any, PORT));
+            ServerSocket.Listen(0);
+            ServerSocket.BeginAccept(AcceptCallback, null);
             Console.WriteLine("Server setup complete");
         }
 
         private static void CloseAllSockets()
         {
-            foreach (Socket socket in clientSockets)
+            foreach (Socket socket in ClientSockets)
             {
                 socket.Shutdown(SocketShutdown.Both);
                 socket.Close();
             }
 
-            serverSocket.Close();
+            ServerSocket.Close();
         }
 
         private static void AcceptCallback(IAsyncResult AR)
@@ -48,22 +50,22 @@ namespace SocketServer
 
             try
             {
-                socket = serverSocket.EndAccept(AR);
+                socket = ServerSocket.EndAccept(AR);
             }
             catch (ObjectDisposedException) // I cannot seem to avoid this (on exit when properly closing sockets)
             {
                 return;
             }
 
-           clientSockets.Add(socket);
-           socket.BeginReceive(buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, socket);
-           Console.WriteLine("Client connected, waiting for request...");
-           serverSocket.BeginAccept(AcceptCallback, null);
+            ClientSockets.Add(socket);
+            socket.BeginReceive(Buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, socket);
+            Console.WriteLine("Client connected, waiting for request...");
+            ServerSocket.BeginAccept(AcceptCallback, null);
         }
 
         private static void ReceiveCallback(IAsyncResult AR)
         {
-            Socket current = (Socket)AR.AsyncState;
+            Socket current = (Socket) AR.AsyncState;
             int received;
 
             try
@@ -74,13 +76,13 @@ namespace SocketServer
             {
                 Console.WriteLine("Client forcefully disconnected");
                 // Don't shutdown because the socket may be disposed and its disconnected anyway.
-                current.Close(); 
-                clientSockets.Remove(current);
+                current.Close();
+                ClientSockets.Remove(current);
                 return;
             }
 
             byte[] recBuf = new byte[received];
-            Array.Copy(buffer, recBuf, received);
+            Array.Copy(Buffer, recBuf, received);
             string text = Encoding.ASCII.GetString(recBuf);
             Console.WriteLine("Received Text: " + text);
 
@@ -103,7 +105,7 @@ namespace SocketServer
                 // Always Shutdown before closing
                 current.Shutdown(SocketShutdown.Both);
                 current.Close();
-                clientSockets.Remove(current);
+                ClientSockets.Remove(current);
                 Console.WriteLine("Client disconnected");
                 return;
             }
@@ -115,17 +117,67 @@ namespace SocketServer
                 Console.WriteLine("Warning Sent");
             }
 
-            current.BeginReceive(buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
+            current.BeginReceive(Buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
         }
     }
 
-    class HandleCommand
+    public class HandleCommand
     {
-        private String text;
+        private Socket current;
+        private readonly string _text;
+        private List<Socket> ClientSockets;
 
-        public HandleCommand(String text)
+        public HandleCommand(string text, Socket current, List<Socket> clientSockets)
         {
-            this.text = text;
+            _text = text.ToLower();
+            this.current = current;
+            ClientSockets = clientSockets;
+            Handle();
+        }
+
+        private void Handle()
+        {
+            if (_text == "get time")
+                GetTimeCommand();
+            else if (_text == "connect")
+                ConnectCommand();
+            else if (_text == "exit")
+                ExitCommand();
+            else
+                UnknownCommand();
+        }
+
+        private void ExitCommand()
+        {
+            current.Shutdown(SocketShutdown.Both);
+            current.Close();
+            ClientSockets.Remove(current);
+            Console.WriteLine("Client disconnected");
+            return;
+        }
+
+        private void UnknownCommand()
+        {
+            Console.WriteLine("Text is an invalid request");
+            byte[] data = Encoding.ASCII.GetBytes("Invalid request");
+            current.Send(data);
+            Console.WriteLine("Warning Sent");
+        }
+
+        private void ConnectCommand()
+        {
+            Console.WriteLine("Text is a get time request");
+            byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
+            current.Send(data);
+            Console.WriteLine("Time sent to client");
+        }
+
+        private void GetTimeCommand()
+        {
+            Console.WriteLine("Text is a get time request");
+            byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
+            current.Send(data);
+            Console.WriteLine("Time sent to client");
         }
     }
 }
