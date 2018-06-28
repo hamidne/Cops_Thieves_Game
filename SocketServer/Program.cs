@@ -8,11 +8,11 @@ namespace SocketServer
 {
     class Program
     {
-        private static readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private static readonly List<Socket> clientSockets = new List<Socket>();
-        private const int BUFFER_SIZE = 2048;
         private const int PORT = 100;
+        private const int BUFFER_SIZE = 2048;
         private static readonly byte[] buffer = new byte[BUFFER_SIZE];
+        private static readonly List<Socket> clientSockets = new List<Socket>();
+        private static readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         static void Main()
         {
@@ -31,10 +31,6 @@ namespace SocketServer
             Console.WriteLine("Server setup complete");
         }
 
-        /// <summary>
-        /// Close all connected client (we do not need to shutdown the server socket as its connections
-        /// are already closed with the clients).
-        /// </summary>
         private static void CloseAllSockets()
         {
             foreach (Socket socket in clientSockets)
@@ -120,6 +116,16 @@ namespace SocketServer
             }
 
             current.BeginReceive(buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
+        }
+    }
+
+    class HandleCommand
+    {
+        private String text;
+
+        public HandleCommand(String text)
+        {
+            this.text = text;
         }
     }
 }
