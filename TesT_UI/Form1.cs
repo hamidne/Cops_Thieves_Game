@@ -23,14 +23,14 @@ namespace TesT_UI
             int n = int.Parse(textBox1.Text.ToString());
             for(int i = 0; i < n; i++)
             {
-                flowLayoutPanel1.Controls.Add(btn(i));
+                flowLayoutPanel1.Controls.Add(btn(i + 1));
             }
         }
 
         Button btn(int i)
         {
             Button b = new Button();
-            b.Name = i.ToString();
+            b.Name = "Tile " + i.ToString();
             b.Width = 62;
             b.Height = 62;
             b.Text = i.ToString();

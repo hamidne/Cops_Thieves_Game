@@ -31,6 +31,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btn_set = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -42,9 +43,9 @@
             // 
             // btn_set
             // 
-            this.btn_set.Location = new System.Drawing.Point(537, 12);
+            this.btn_set.Location = new System.Drawing.Point(493, 83);
             this.btn_set.Name = "btn_set";
-            this.btn_set.Size = new System.Drawing.Size(75, 23);
+            this.btn_set.Size = new System.Drawing.Size(149, 31);
             this.btn_set.TabIndex = 1;
             this.btn_set.Text = "Set";
             this.btn_set.UseVisualStyleBackColor = true;
@@ -52,16 +53,26 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(522, 41);
+            this.textBox1.Location = new System.Drawing.Point(493, 55);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
+            this.textBox1.Size = new System.Drawing.Size(149, 22);
             this.textBox1.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(490, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(152, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Enter Your Tile Count :";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 490);
+            this.ClientSize = new System.Drawing.Size(654, 490);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btn_set);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -77,6 +88,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btn_set;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
