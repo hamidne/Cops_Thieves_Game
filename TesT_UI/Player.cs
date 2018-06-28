@@ -26,6 +26,8 @@ namespace TesT_UI
             playGround = new int[x,y];
             Number = num;
             isYourTurn = true;
+            positionX = -1;
+            positionY = -1;
         }
     }
 }

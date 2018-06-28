@@ -13,6 +13,7 @@ namespace TesT_UI
     public partial class Form1 : Form
     {
         Player cop, thief;
+        int col = 5;
         int level = 0;
         public Form1()
         {
@@ -29,23 +30,26 @@ namespace TesT_UI
                 {
                     flowLayoutPanel1.Controls.Add(btn(i));
                 }
-                cop = new Player(5, Int32.Parse(textBox1.Text) / 5, 1);
+                cop = new Player(col, Int32.Parse(textBox1.Text) / col, 1);
                 cop.Type = true;
-                thief = new Player(5, Int32.Parse(textBox1.Text) / 5, 2);
-                thief.Type = true;
+                thief = new Player(col, Int32.Parse(textBox1.Text) / col, 2);
+                thief.Type = false;
                 label1.Text = "Set Police Position : ";
                 textBox1.Text = null;
                 level++;
             }
             else if (level == 1)
             {
-                Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
-                Btn[0].Text = "Police";
-                Btn[0].ForeColor = Color.Blue;
-                //Send Request to server To Create new Player with posX,posY and get number and playground response (TO DO)
-                cop.positionX = Int32.Parse(textBox1.Text) % 5;
-                cop.positionY = Int32.Parse(textBox1.Text) / 5;
-                cop.playGround[cop.positionX, cop.positionY] = cop.Number;
+                cop.positionX = Int32.Parse(textBox1.Text) % col;
+                cop.positionY = Int32.Parse(textBox1.Text) / col;
+                SetPosition(true, Int32.Parse(textBox1.Text) % col, Int32.Parse(textBox1.Text) / col);
+
+                //Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
+                //Btn[0].Text = "Police";
+                //Btn[0].ForeColor = Color.Blue;
+                //cop.positionX = Int32.Parse(textBox1.Text) % col;
+                //cop.positionY = Int32.Parse(textBox1.Text) / col;
+                //cop.playGround[cop.positionX, cop.positionY] = cop.Number;
 
                 label1.Text = "Set Thief Position : ";
                 textBox1.Text = null;
@@ -53,15 +57,17 @@ namespace TesT_UI
             }
             else if (level == 2)
             {
-                Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
-                Btn[0].Text = "Thief";
-                //Send Request to server To Create new Player with posX,posY and get number and playground response (TO DO)
-                Btn[0].ForeColor = Color.Red;
-                thief.positionX = Int32.Parse(textBox1.Text) % 5;
-                thief.positionY = Int32.Parse(textBox1.Text) / 5;
-                thief.playGround[thief.positionX, thief.positionY] = thief.Number;
-                thief.playGround[cop.positionX, cop.positionY] = cop.Number;
-                cop.playGround[thief.positionX, thief.positionY] = thief.Number;
+                SetPosition(false, Int32.Parse(textBox1.Text) % col, Int32.Parse(textBox1.Text) / col);
+                //SetPosition(true, cop.positionX, cop.positionY);
+
+                //Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
+                //Btn[0].Text = "Thief";
+                //Btn[0].ForeColor = Color.Red;
+                //thief.positionX = Int32.Parse(textBox1.Text) % col;
+                //thief.positionY = Int32.Parse(textBox1.Text) / col;
+                //thief.playGround[thief.positionX, thief.positionY] = thief.Number;
+                //thief.playGround[cop.positionX, cop.positionY] = cop.Number;
+                //cop.playGround[thief.positionX, thief.positionY] = thief.Number;
 
                 label1.Visible = false;
                 textBox1.Visible = false;
@@ -80,10 +86,53 @@ namespace TesT_UI
             b.Click += B_Click;
             return b;
         }
-        void B_Click(object sender,EventArgs e)
+        void B_Click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
-            MessageBox.Show(b.Name.ToString());
+            int x = Int32.Parse(b.Text) % col;
+            int y = Int32.Parse(b.Text) / col;
+            Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + (thief.positionY * col + thief.positionX).ToString(), true);
+            if ((x <= thief.positionX + 1 && x >= thief.positionX - 1) && (y <= thief.positionY + 1 && y >= thief.positionY - 1))
+            {
+                Btn[0].Text = (thief.positionY * col + thief.positionX).ToString();
+                Btn[0].ForeColor = Color.Black;
+                cop.playGround[thief.positionX, thief.positionY] = 0;
+                thief.playGround[thief.positionX, thief.positionY] = 0;
+                SetPosition(false, x, y);
+            }
+            else
+                MessageBox.Show(b.Name.ToString());
+        }
+        void SetPosition(bool type, int x, int y)
+        {
+            Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + (y * col + x).ToString(), true);
+            if (type == true)
+            {
+                Btn[0].Text = "Police";
+                Btn[0].ForeColor = Color.Blue;
+                cop.positionX = x;
+                cop.positionY = y;
+            }
+            else
+            {
+                Btn[0].Text = "Thief";
+                Btn[0].ForeColor = Color.Red;
+                thief.positionX = x;
+                thief.positionY = y;
+            }
+
+            //Send Request to server To Create new Player with posX,posY and get number and playground response (TO DO)
+
+            if (thief.positionY != -1)
+            {
+                thief.playGround[thief.positionX, thief.positionY] = thief.Number;
+                cop.playGround[thief.positionX, thief.positionY] = thief.Number;
+            }
+            if (cop.positionY != -1)
+            {
+                thief.playGround[cop.positionX, cop.positionY] = cop.Number;
+                cop.playGround[cop.positionX, cop.positionY] = cop.Number;
+            }
         }
     }
 }
