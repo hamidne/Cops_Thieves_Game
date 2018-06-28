@@ -19,12 +19,12 @@ namespace SplashScreen
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            progressBar1.Increment(1);
             if (progressBar1.Value == 100)
             {
                 timer1.Stop();
                 this.Close();
             }
+            progressBar1.Increment(2);
         }
     }
 }
