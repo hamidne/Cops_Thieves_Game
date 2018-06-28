@@ -36,16 +36,18 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 10);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(471, 466);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(353, 379);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btn_set
             // 
-            this.btn_set.Location = new System.Drawing.Point(493, 83);
+            this.btn_set.Location = new System.Drawing.Point(370, 67);
+            this.btn_set.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btn_set.Name = "btn_set";
-            this.btn_set.Size = new System.Drawing.Size(149, 31);
+            this.btn_set.Size = new System.Drawing.Size(112, 25);
             this.btn_set.TabIndex = 1;
             this.btn_set.Text = "Set";
             this.btn_set.UseVisualStyleBackColor = true;
@@ -53,29 +55,32 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(493, 55);
+            this.textBox1.Location = new System.Drawing.Point(370, 45);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(149, 22);
+            this.textBox1.Size = new System.Drawing.Size(113, 20);
             this.textBox1.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(490, 32);
+            this.label1.Location = new System.Drawing.Point(368, 26);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(152, 17);
+            this.label1.Size = new System.Drawing.Size(114, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Enter Your Tile Count :";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 490);
+            this.ClientSize = new System.Drawing.Size(490, 398);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btn_set);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

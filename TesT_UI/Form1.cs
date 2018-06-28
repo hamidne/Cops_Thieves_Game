@@ -12,6 +12,7 @@ namespace TesT_UI
 {
     public partial class Form1 : Form
     {
+        int level = 0;
         public Form1()
         {
             InitializeComponent();
@@ -19,11 +20,34 @@ namespace TesT_UI
 
         private void btn_set_Click(object sender, EventArgs e)
         {
-            flowLayoutPanel1.Controls.Clear();
-            int n = int.Parse(textBox1.Text.ToString());
-            for(int i = 0; i < n; i++)
+            if (level == 0)
             {
-                flowLayoutPanel1.Controls.Add(btn(i + 1));
+                flowLayoutPanel1.Controls.Clear();
+                int n = int.Parse(textBox1.Text.ToString());
+                for (int i = 0; i < n; i++)
+                {
+                    flowLayoutPanel1.Controls.Add(btn(i + 1));
+                }
+                label1.Text = "Set Police Position : ";
+                textBox1.Text = null;
+                level++;
+            }
+            else if (level == 1)
+            {
+                Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
+                Btn[0].Text = "Police";
+                label1.Text = "Set Thief Position : ";
+                textBox1.Text = null;
+                level++;
+            }
+            else if (level == 2)
+            {
+                Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
+                Btn[0].Text = "Thief";
+                label1.Visible = false;
+                textBox1.Visible = false;
+                btn_set.Visible = false;
+                level++;
             }
         }
 
