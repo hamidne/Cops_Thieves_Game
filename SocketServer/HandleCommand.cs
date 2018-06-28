@@ -5,22 +5,18 @@ using System.Collections.Generic;
 
 namespace SocketServer
 {
-    public class HandleCommand
+    public static class HandleCommand
     {
-        private Socket current;
-        private readonly string _text;
-        private List<Socket> ClientSockets;
+        private static string _text;
+        private static Socket _current;
+        private static List<Socket> _clientSockets;
 
-        public HandleCommand(string text, Socket current, List<Socket> clientSockets)
+        public static void Handle(List<Socket> clientSockets, Socket current, string text)
         {
             _text = text.ToLower();
-            this.current = current;
-            ClientSockets = clientSockets;
-            Handle();
-        }
-
-        private void Handle()
-        {
+            _current = current;
+            _clientSockets = clientSockets;
+            
             if (_text == "get time")
                 GetTimeCommand();
             else if (_text == "connect")
@@ -31,36 +27,36 @@ namespace SocketServer
                 UnknownCommand();
         }
 
-        private void ExitCommand()
+        private static int ExitCommand()
         {
-            current.Shutdown(SocketShutdown.Both);
-            current.Close();
-            ClientSockets.Remove(current);
+            _current.Shutdown(SocketShutdown.Both);
+            _current.Close();
+            _clientSockets.Remove(_current);
             Console.WriteLine("Client disconnected");
-            return;
+            return 0;
         }
 
-        private void UnknownCommand()
+        private static void UnknownCommand()
         {
             Console.WriteLine("Text is an invalid request");
             byte[] data = Encoding.ASCII.GetBytes("Invalid request");
-            current.Send(data);
+            _current.Send(data);
             Console.WriteLine("Warning Sent");
         }
 
-        private void ConnectCommand()
+        private static void ConnectCommand()
         {
             Console.WriteLine("Text is a get time request");
             byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
-            current.Send(data);
+            _current.Send(data);
             Console.WriteLine("Time sent to client");
         }
 
-        private void GetTimeCommand()
+        private static void GetTimeCommand()
         {
             Console.WriteLine("Text is a get time request");
             byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
-            current.Send(data);
+            _current.Send(data);
             Console.WriteLine("Time sent to client");
         }
     }
