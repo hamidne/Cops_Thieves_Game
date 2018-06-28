@@ -95,6 +95,13 @@ namespace SocketServer
                 current.Send(data);
                 Console.WriteLine("Time sent to client");
             }
+            else if (text.ToLower() == "connect") // Client wants to join game
+            {
+                Console.WriteLine("Text is a join game request");
+                byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
+                current.Send(data);
+                Console.WriteLine("client connect to game");
+            }
             else if (text.ToLower() == "exit") // Client wants to exit gracefully
             {
                 // Always Shutdown before closing
