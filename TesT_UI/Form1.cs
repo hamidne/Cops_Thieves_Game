@@ -36,6 +36,7 @@ namespace TesT_UI
             {
                 Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
                 Btn[0].Text = "Police";
+                Btn[0].ForeColor = Color.Blue;
                 label1.Text = "Set Thief Position : ";
                 textBox1.Text = null;
                 level++;
@@ -44,6 +45,7 @@ namespace TesT_UI
             {
                 Control[] Btn = flowLayoutPanel1.Controls.Find("Tile " + textBox1.Text.ToString(), true);
                 Btn[0].Text = "Thief";
+                Btn[0].ForeColor = Color.Red;
                 label1.Visible = false;
                 textBox1.Visible = false;
                 btn_set.Visible = false;
