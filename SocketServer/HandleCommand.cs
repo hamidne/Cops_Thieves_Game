@@ -35,7 +35,7 @@ namespace SocketServer
             Console.WriteLine("Time sent to client");
         }
 
-        // connect $username => connect $id
+        // connect $username => connected $id
         private static void ConnectCommand(string text)
         {
             Match match = Regex.Match(text, @"^connect (\w+)$");
@@ -45,7 +45,7 @@ namespace SocketServer
                 {
                     Console.WriteLine("Text is a join to game request");
                     _users.Add(new User(match.Groups[1].Value));
-                    SendMessage(_users.Count + " : " + _users.Last().Name);
+                    SendMessage("connected " + _users.Count + ":" + _users.Last().Name);
                     Console.WriteLine("Accept join to game request");
                     Console.WriteLine("User " + _users.Last().Name + " login to server");
                 }
