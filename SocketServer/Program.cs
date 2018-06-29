@@ -83,24 +83,11 @@ namespace SocketServer
 
             byte[] recBuf = new byte[received];
             Array.Copy(Buffer, recBuf, received);
-            string text = Encoding.ASCII.GetString(recBuf);
+            string text = Encoding.ASCII.GetString(recBuf).Trim().ToLower();
             Console.WriteLine("Received Text: " + text);
 
-            if (text.ToLower() == "get time") // Client requested time
-            {
-                Console.WriteLine("Text is a get time request");
-                byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
-                current.Send(data);
-                Console.WriteLine("Time sent to client");
-            }
-            else if (text.ToLower() == "connect") // Client wants to join game
-            {
-                Console.WriteLine("Text is a join game request");
-                byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
-                current.Send(data);
-                Console.WriteLine("client connect to game");
-            }
-            else if (text.ToLower() == "exit") // Client wants to exit gracefully
+            
+            if (text == "exit")
             {
                 // Always Shutdown before closing
                 current.Shutdown(SocketShutdown.Both);
@@ -109,13 +96,9 @@ namespace SocketServer
                 Console.WriteLine("Client disconnected");
                 return;
             }
-            else
-            {
-                Console.WriteLine("Text is an invalid request");
-                byte[] data = Encoding.ASCII.GetBytes("Invalid request");
-                current.Send(data);
-                Console.WriteLine("Warning Sent");
-            }
+
+            HandleCommand.Handle(current, text);
+
 
             current.BeginReceive(Buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
         }
