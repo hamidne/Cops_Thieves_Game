@@ -38,8 +38,9 @@ namespace SocketServer
         {
             Console.WriteLine("Text is a join to game request");
             _users.Add(new User(1, "asdasd"));
-            SendMessage(DateTime.Now.ToLongTimeString());
+            SendMessage(_users.Count.ToString());
             Console.WriteLine("Accept join to game request");
+            Console.WriteLine("User " + _users.Count + " login to server");
         }
 
         private static void UnknownCommand()
