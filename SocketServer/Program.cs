@@ -10,6 +10,7 @@ namespace SocketServer
     {
         private const int PORT = 100;
         private const int BUFFER_SIZE = 2048;
+        private static List<User> Users = new List<User>();
         private static readonly byte[] Buffer = new byte[BUFFER_SIZE];
         private static readonly List<Socket> ClientSockets = new List<Socket>();
 
@@ -97,9 +98,7 @@ namespace SocketServer
                 return;
             }
 
-            HandleCommand.Handle(current, text);
-
-
+            HandleCommand.Handle(current, Users, text);
             current.BeginReceive(Buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
         }
     }
