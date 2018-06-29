@@ -13,14 +13,14 @@ namespace SocketServer
 
         public static void Handle(List<Socket> clientSockets, Socket current, string text)
         {
-            _text = text.ToLower();
+            _text = text.Trim().ToLower();
             _current = current;
             _clientSockets = clientSockets;
             
             if (_text == "get time")
                 GetTimeCommand();
-            else if (_text == "connect")
-                ConnectCommand();
+            else if (_text.StartsWith("connect"))
+                ConnectCommand(_text);
             else if (_text == "exit")
                 ExitCommand();
             else
@@ -44,7 +44,7 @@ namespace SocketServer
             Console.WriteLine("Warning Sent");
         }
 
-        private static void ConnectCommand()
+        private static void ConnectCommand(string text)
         {
             Console.WriteLine("Text is a get time request");
             byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
