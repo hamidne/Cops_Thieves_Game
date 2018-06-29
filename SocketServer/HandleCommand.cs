@@ -21,29 +21,32 @@ namespace SocketServer
             else
                 UnknownCommand();
         }
+        
+        private static void GetTimeCommand()    // get time => $time
+        {
+            Console.WriteLine("Text is a get time request");
+            SendMessage(DateTime.Now.ToLongTimeString());
+            Console.WriteLine("Time sent to client");
+        }
 
+        private static void ConnectCommand(string text)    // connect $username => connect $id
+        {
+            Console.WriteLine("Text is a join to game request");
+            SendMessage(DateTime.Now.ToLongTimeString());
+            Console.WriteLine("Accept join to game request");
+        }
+        
         private static void UnknownCommand()
         {
             Console.WriteLine("Text is an invalid request");
-            byte[] data = Encoding.ASCII.GetBytes("Invalid request");
-            _current.Send(data);
+            SendMessage("Invalid request");
             Console.WriteLine("Warning Sent");
         }
 
-        private static void ConnectCommand(string text)
+        private static void SendMessage(string message)
         {
-            Console.WriteLine("Text is a get time request");
-            byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
+            byte[] data = Encoding.ASCII.GetBytes(message);
             _current.Send(data);
-            Console.WriteLine("Time sent to client");
-        }
-
-        private static void GetTimeCommand()
-        {
-            Console.WriteLine("Text is a get time request");
-            byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
-            _current.Send(data);
-            Console.WriteLine("Time sent to client");
         }
     }
 }
