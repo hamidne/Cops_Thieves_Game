@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Net.Sockets;
-using System.Collections.Generic;
 
 namespace SocketServer
 {
@@ -9,31 +8,18 @@ namespace SocketServer
     {
         private static string _text;
         private static Socket _current;
-        private static List<Socket> _clientSockets;
 
-        public static void Handle(List<Socket> clientSockets, Socket current, string text)
+        public static void Handle(Socket current, string text)
         {
-            _text = text.Trim().ToLower();
+            _text = text;
             _current = current;
-            _clientSockets = clientSockets;
             
             if (_text == "get time")
                 GetTimeCommand();
             else if (_text.StartsWith("connect"))
                 ConnectCommand(_text);
-            else if (_text == "exit")
-                ExitCommand();
             else
                 UnknownCommand();
-        }
-
-        private static int ExitCommand()
-        {
-            _current.Shutdown(SocketShutdown.Both);
-            _current.Close();
-            _clientSockets.Remove(_current);
-            Console.WriteLine("Client disconnected");
-            return 0;
         }
 
         private static void UnknownCommand()
