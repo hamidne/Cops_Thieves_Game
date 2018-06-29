@@ -2,6 +2,7 @@
 using System.Text;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SocketServer
@@ -37,17 +38,25 @@ namespace SocketServer
         // connect $username => connect $id
         private static void ConnectCommand(string text)
         {
-            Regex regex = new Regex(@"^connect (\w+)$");
-            Match match = regex.Match(text);
+            Match match = Regex.Match(text, @"^connect (\w+)$");
             if (match.Success)
             {
-                Console.WriteLine("Text is a join to game request");
-                _users.Add(new User(1, match.Groups[1].Value));
-                SendMessage(_users.Count + " : " + match.Groups[1].Value);
-                Console.WriteLine("Accept join to game request");
-                Console.WriteLine("User " + _users.Count + " login to server");
-            } else
-            {
+                if (!_users.Exists(user => user.Name == match.Groups[1].Value))
+                {
+                    Console.WriteLine("Text is a join to game request");
+                    _users.Add(new User(match.Groups[1].Value));
+                    SendMessage(_users.Count + " : " + _users.Last().Name);
+                    Console.WriteLine("Accept join to game request");
+                    Console.WriteLine("User " + _users.Last().Name + " login to server");
+                }
+                else
+                {
+                    Console.WriteLine("Text is a join to game request");
+                    SendMessage("This username is already exist plase set new username");
+                    Console.WriteLine("Not accept join to game request");
+                }
+                
+            } else {
                 SendMessage("Invalid parameters for connect command");
                 Console.WriteLine("Accept join to game request");
             }            
