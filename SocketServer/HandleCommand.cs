@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using System.Net.Sockets;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SocketServer
@@ -13,6 +13,7 @@ namespace SocketServer
         private static Socket _current;
         private static List<User> _users;
 
+        // Register new commad in this method
         public static void Handle(Socket current, List<User> users, string text)
         {
             _text = text;
@@ -55,11 +56,12 @@ namespace SocketServer
                     SendMessage("This username is already exist plase set new username");
                     Console.WriteLine("Not accept join to game request");
                 }
-                
-            } else {
+            }
+            else
+            {
                 SendMessage("Invalid parameters for connect command");
                 Console.WriteLine("Accept join to game request");
-            }            
+            }
         }
 
         private static void UnknownCommand()
