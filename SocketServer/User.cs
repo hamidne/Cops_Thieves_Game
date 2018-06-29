@@ -1,14 +1,19 @@
 ﻿namespace SocketServer
 {
+    enum UserStatus : byte
+    {
+        Created
+    }
+    
     public struct User
     {
-        private int id;
-        private string name;
+        public byte Status { get; private set; }
+        public string Name { get; private set; }
 
-        public User(int id, string name) : this()
+        public User(string name) : this()
         {
-            this.id = id;
-            this.name = name;
+            Name = name;
+            Status = (byte) UserStatus.Created;
         }
     }
 }
