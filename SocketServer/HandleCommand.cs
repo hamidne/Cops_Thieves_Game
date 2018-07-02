@@ -23,7 +23,7 @@ namespace SocketServer
             if (_text == "get time")
                 GetTimeCommand();
             else if (_text.StartsWith("connect"))
-                ConnectCommand(_text);
+                ConnectCommand();
             else
                 UnknownCommand();
         }
@@ -37,9 +37,9 @@ namespace SocketServer
         }
 
         // connect $username => connected $id
-        private static void ConnectCommand(string text)
+        private static void ConnectCommand()
         {
-            Match match = Regex.Match(text, @"^connect (\w+)$");
+            Match match = Regex.Match(_text, @"^connect (\w+)$");
             if (match.Success)
             {
                 if (!_users.Exists(user => user.Name == match.Groups[1].Value))
