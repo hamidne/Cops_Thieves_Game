@@ -14,11 +14,9 @@ namespace SocketClient
         {
             _port = port;
             _clientSocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            ConnectToServer();
-            RequestLoop();
         }
 
-        private static bool ConnectToServer()
+        public bool ConnectToServer()
         {
             int attempts = 0;
 
@@ -40,7 +38,7 @@ namespace SocketClient
             return true;
         }
 
-        private static void RequestLoop()
+        private void RequestLoop()
         {
             while (true)
             {
@@ -49,7 +47,7 @@ namespace SocketClient
             }
         }
 
-        private static void SendRequest()
+        public void SendRequest()
         {
             Console.Write("Send a request: ");
             string request = Console.ReadLine();
@@ -61,7 +59,7 @@ namespace SocketClient
             }
         }
 
-        private static string ReceiveResponse()
+        public string ReceiveResponse()
         {
             var buffer = new byte[2048];
             int received = _clientSocket.Receive(buffer, SocketFlags.None);

@@ -16,6 +16,12 @@ namespace SocketClient
         {
             Console.Title = "Client";
             SocketClient client = new SocketClient(100);
+            Console.WriteLine(client.ConnectToServer());
+            while (true)
+            {
+                client.SendRequest();
+                Console.WriteLine(client.ReceiveResponse());
+            }
         }
     }
 }
