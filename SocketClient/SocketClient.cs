@@ -18,7 +18,7 @@ namespace SocketClient
             RequestLoop();
         }
 
-        private static void ConnectToServer()
+        private static bool ConnectToServer()
         {
             int attempts = 0;
 
@@ -37,14 +37,11 @@ namespace SocketClient
                 }
             }
 
-            Console.Clear();
-            Console.WriteLine("Connected");
+            return true;
         }
 
         private static void RequestLoop()
         {
-            Console.WriteLine(@"<Type ""exit"" to properly disconnect client>");
-
             while (true)
             {
                 SendRequest();
