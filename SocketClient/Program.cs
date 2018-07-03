@@ -7,10 +7,6 @@ namespace SocketClient
 {
     class Program
     {
-        private static readonly Socket ClientSocket = new Socket
-            (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-        private const int PORT = 100;
 
         static void Main()
         {
@@ -19,7 +15,8 @@ namespace SocketClient
             Console.WriteLine(client.ConnectToServer());
             while (true)
             {
-                client.SendRequest();
+                string request = Console.ReadLine();
+                client.SendRequest(request);
                 Console.WriteLine(client.ReceiveResponse());
             }
         }

@@ -38,25 +38,13 @@ namespace SocketClient
             return true;
         }
 
-        private void RequestLoop()
-        {
-            while (true)
-            {
-                SendRequest();
-                Console.WriteLine(ReceiveResponse());
-            }
-        }
-
-        public void SendRequest()
+        public void SendRequest(string request)
         {
             Console.Write("Send a request: ");
-            string request = Console.ReadLine();
             SendString(request);
 
             if (request.ToLower() == "exit")
-            {
                 Exit();
-            }
         }
 
         public string ReceiveResponse()
