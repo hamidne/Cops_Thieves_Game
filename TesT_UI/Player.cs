@@ -11,7 +11,7 @@ namespace TesT_UI
         public int[,] playGround;
         public int positionX;
         public int positionY;
-        public int Number;
+        public int ID;
         public bool isYourTurn;
         public bool Type;
         // Type is False -> is Thief
@@ -24,7 +24,7 @@ namespace TesT_UI
         public Player(int x, int y, int num)
         {
             playGround = new int[x,y];
-            Number = num;
+            ID = num;
             isYourTurn = true;
             positionX = -1;
             positionY = -1;

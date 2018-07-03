@@ -74,6 +74,11 @@ namespace SocketServer
         private static void SendMessage(string message)
         {
             byte[] data = Encoding.ASCII.GetBytes(message);
+
+            //for(int i = 0; i < Program.ClientSockets.Count; i++)
+            //{
+            //    Program.ClientSockets[i].Send(data);
+            //}
             _current.Send(data);
         }
     }

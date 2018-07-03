@@ -125,13 +125,13 @@ namespace TesT_UI
 
             if (thief.positionY != -1)
             {
-                thief.playGround[thief.positionX, thief.positionY] = thief.Number;
-                cop.playGround[thief.positionX, thief.positionY] = thief.Number;
+                thief.playGround[thief.positionX, thief.positionY] = thief.ID;
+                cop.playGround[thief.positionX, thief.positionY] = thief.ID;
             }
             if (cop.positionY != -1)
             {
-                thief.playGround[cop.positionX, cop.positionY] = cop.Number;
-                cop.playGround[cop.positionX, cop.positionY] = cop.Number;
+                thief.playGround[cop.positionX, cop.positionY] = cop.ID;
+                cop.playGround[cop.positionX, cop.positionY] = cop.ID;
             }
         }
     }
