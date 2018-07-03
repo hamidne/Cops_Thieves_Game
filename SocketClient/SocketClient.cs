@@ -45,19 +45,8 @@ namespace SocketClient
             while (true)
             {
                 SendRequest();
-                ReceiveResponse();
+                Console.WriteLine(ReceiveResponse());
             }
-        }
-
-        /// <summary>
-        /// Close socket and exit program.
-        /// </summary>
-        private static void Exit()
-        {
-            SendString("exit"); // Tell the server we are exiting
-            _clientSocket.Shutdown(SocketShutdown.Both);
-            _clientSocket.Close();
-            Environment.Exit(0);
         }
 
         private static void SendRequest()
@@ -72,24 +61,28 @@ namespace SocketClient
             }
         }
 
-        /// <summary>
-        /// Sends a string to the server with ASCII encoding.
-        /// </summary>
+        private static string ReceiveResponse()
+        {
+            var buffer = new byte[2048];
+            int received = _clientSocket.Receive(buffer, SocketFlags.None);
+            if (received == 0) return "";
+            var data = new byte[received];
+            Array.Copy(buffer, data, received);
+            return Encoding.ASCII.GetString(data);
+        }
+        
+        private static void Exit()
+        {
+            SendString("exit"); // Tell the server we are exiting
+            _clientSocket.Shutdown(SocketShutdown.Both);
+            _clientSocket.Close();
+            Environment.Exit(0);
+        }
+        
         private static void SendString(string text)
         {
             byte[] buffer = Encoding.ASCII.GetBytes(text);
             _clientSocket.Send(buffer, 0, buffer.Length, SocketFlags.None);
-        }
-
-        private static void ReceiveResponse()
-        {
-            var buffer = new byte[2048];
-            int received = _clientSocket.Receive(buffer, SocketFlags.None);
-            if (received == 0) return;
-            var data = new byte[received];
-            Array.Copy(buffer, data, received);
-            string text = Encoding.ASCII.GetString(data);
-            Console.WriteLine(text);
         }
     }
 }
