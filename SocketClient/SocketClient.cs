@@ -40,9 +40,7 @@ namespace SocketClient
 
         public void SendRequest(string request)
         {
-            Console.Write("Send a request: ");
             SendString(request);
-
             if (request.ToLower() == "exit")
                 Exit();
         }

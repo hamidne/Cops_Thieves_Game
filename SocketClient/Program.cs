@@ -15,8 +15,9 @@ namespace SocketClient
             Console.WriteLine(client.ConnectToServer());
             while (true)
             {
+                Console.Write("Send a request: ");
                 string request = Console.ReadLine();
-                client.SendRequest(request);
+                if (request != null) client.SendRequest(request);
                 Console.WriteLine(client.ReceiveResponse());
             }
         }
