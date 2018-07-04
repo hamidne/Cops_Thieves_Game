@@ -43,11 +43,11 @@ namespace WPFPageSwitch.Menu
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             // code goes here
-            progressBar.Value++;
+            progressBar.Value+=5;
             if (progressBar.Value == 100)
             {
                 dispatcherTimer.Stop();
-                Switcher.Switch(new MainMenu());
+                Switcher.Switch(new CreateGameAndJoin());
             }
         }
 
