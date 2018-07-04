@@ -15,7 +15,6 @@ namespace SocketClient
         static void Main()
         {
             Console.Title = "Client";
-
             SocketClient client = new SocketClient(100);
         }
     }

@@ -29,5 +29,9 @@ namespace WPFPageSwitch.Menu
 
         }
 
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
