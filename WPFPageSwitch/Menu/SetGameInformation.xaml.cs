@@ -26,7 +26,7 @@ namespace WPFPageSwitch.Menu
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-
+            SocketClient.SendString("connect erfan");
         }
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

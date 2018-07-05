@@ -19,6 +19,8 @@ namespace WPFPageSwitch.Menu
     /// </summary>
     public partial class StartTheGame : UserControl , ISwitchable
     {
+        public static SocketClient client;
+       // System.Windows.Threading.DispatcherObject Client;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
         public StartTheGame()
         {
@@ -43,12 +45,16 @@ namespace WPFPageSwitch.Menu
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             // code goes here
-            progressBar.Value+=5;
             if (progressBar.Value == 100)
             {
                 dispatcherTimer.Stop();
                 Switcher.Switch(new CreateGameAndJoin());
             }
+            else if (progressBar.Value == 0)
+            {
+                client = new SocketClient(100);
+            }
+            progressBar.Value+=5;
         }
 
         

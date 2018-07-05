@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net.Sockets;
 using System.Windows;
 
 namespace WPFPageSwitch
@@ -12,5 +13,6 @@ namespace WPFPageSwitch
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }

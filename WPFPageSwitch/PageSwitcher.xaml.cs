@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using System.Windows;
 using System.Windows.Controls;
 using WPFPageSwitch.Menu;
@@ -8,13 +9,17 @@ namespace WPFPageSwitch
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
+    
     public partial class PageSwitcher : Window
     {
+        
         public PageSwitcher()
         {
+            
             InitializeComponent();
             Switcher.pageSwitcher = this;
-            Switcher.Switch(new StartTheGame());            
+            Switcher.Switch(new StartTheGame());
+                       
         }
 
         public void Navigate(UserControl nextPage)
