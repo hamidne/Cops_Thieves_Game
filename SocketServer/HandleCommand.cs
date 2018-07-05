@@ -23,6 +23,8 @@ namespace SocketServer
                 GetTimeCommand();
             else if (_text.StartsWith("connect"))
                 ConnectCommand(_text);
+            else if (_text.StartsWith("create"))
+                CreateGameCommand(_text);
             else
                 UnknownCommand();
         }
@@ -33,6 +35,40 @@ namespace SocketServer
             Console.WriteLine("Text is a get time request");
             SendMessage(DateTime.Now.ToLongTimeString());
             Console.WriteLine("Time sent to client");
+        }
+
+        private static void CreateGameCommand(string text)
+        {
+            Match match = Regex.Match(text, @"^create (\w+):(\w+):(\w+):(\w+)$");
+            if (match.Success)
+            {
+                if (!_users.Exists(user => user.Name == match.Groups[1].Value))
+                {
+                    Console.WriteLine("Text is a create the game request");
+                    _users.Add(new User(match.Groups[1].Value));
+                    //set the playground 
+                    //set num of players
+                    Console.WriteLine(match.Groups[2].Value);
+                    Console.WriteLine(match.Groups[3].Value);
+                    Console.WriteLine(match.Groups[4].Value);
+                    SendMessage("created " + _users.Count + ":" + _users.Last().Name);
+                    Console.WriteLine("Accept create the game request");
+
+                    Console.WriteLine("User " + _users.Last().Name + " created the game");
+                }
+                else
+                {
+                    Console.WriteLine("Text is a create the game request");
+                    SendMessage("This username is already created a game set new username or join the game");
+                    Console.WriteLine("Not accept create the game request");
+                }
+            }
+            else
+            {
+                SendMessage("Invalid parameters for create game command");
+                Console.WriteLine("Not Accept create thee game request");
+            }
+         
         }
 
         // connect $username => connected $id
