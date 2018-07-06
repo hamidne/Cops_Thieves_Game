@@ -31,8 +31,42 @@ namespace SocketServer
                 WantToJoin();
             else if (_text.StartsWith("join"))
                 JoinTheGameCommand(_text);
+            else if (_text.StartsWith("move"))
+                MovePlayerCommand(_text);
             else
                 UnknownCommand();
+        }
+
+        private static void MovePlayerCommand(string text)
+        {
+            Match match = Regex.Match(text, @"^move (\w+):(\w+):(\w+)$");
+            if (match.Success)
+            {
+                Console.WriteLine("Text is a move the player request");
+                int x = Convert.ToInt32(match.Groups[2].Value);
+                int y = Convert.ToInt32(match.Groups[3].Value);
+                int id = Convert.ToInt32(match.Groups[1].Value);
+                for (int i = 0; i < Program.width; i++)
+                {
+                    for (int j = 0; j < Program.height; j++)
+                    {
+                        if (Program.playGround[i, j] ==id)
+                            Program.playGround[i, j] = 0;
+                    }
+                }
+                Program.playGround[x, y] = id;
+                //change the player turn
+                Program.ChangeTurn(id);
+                //change the player turn
+
+                byte[] data ;
+                for (int i = 0; i < Program.ClientSockets.Count; i++)
+                {
+                    data = Encoding.ASCII.GetBytes("moved " + id + ":" + x + ":" + y+":"+_users[i].Turn);
+                    Program.ClientSockets[i].Send(data);
+                }
+                Console.WriteLine("User " + _users[id].Name + " moved to " + x + "," + y);
+            }
         }
 
         private static void JoinTheGameCommand(string text)

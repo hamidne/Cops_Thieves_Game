@@ -35,23 +35,59 @@ namespace WPFPageSwitch.Menu
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            worker.RunWorkerAsync();
+            //throw new NotImplementedException();
         }
 
         private void WaitForResponse(object sender, DoWorkEventArgs e)
         {
             while (SocketClient.response == "") ;
-            Match match = Regex.Match(SocketClient.response, @"^allplayerpos (\w+):([0-9\:]+)$");
+            if (SocketClient.response.StartsWith("allplayerpos"))
+                SetAllPlayersPosition(SocketClient.response);
+            else if (SocketClient.response.StartsWith("moved"))
+                SetChangedPlayerPosition(SocketClient.response);
+            
+        }
+
+        private void SetChangedPlayerPosition(string response)
+        {
+            Match match = Regex.Match(response, @"^moved (\w+):(\w+):(\w+):(\w+)$");
+            if (match.Success)
+            {
+                int id = Convert.ToInt32(match.Groups[1].Value);
+                int x = Convert.ToInt32(match.Groups[2].Value);
+                int y = Convert.ToInt32(match.Groups[3].Value);
+                bool turn = Convert.ToBoolean(match.Groups[4].Value);
+                for (int i = 0; i < Player.playGroundWidth; i++)
+                {
+                    for (int j = 0; j < Player.playGroundHeight; j++)
+                    {
+                        if (Player.playGround[i, j] == id)
+                            Player.playGround[i, j] = 0;
+                    }
+                }
+                Player.playGround[x, y] = id;
+                Player.isYourTurn = turn;
+            }
+            else
+            {
+                //error
+            }
+        }
+
+        private void SetAllPlayersPosition(string response)
+        {
+            Match match = Regex.Match(response, @"^allplayerpos (\w+):([0-9\:]+)$");
             if (match.Success)
             {
                 if (Convert.ToInt32(match.Groups[1].Value) == 2)
-                    match = Regex.Match(SocketClient.response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
+                    match = Regex.Match(response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
                 else if (Convert.ToInt32(match.Groups[1].Value) == 4)
-                    match = Regex.Match(SocketClient.response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
+                    match = Regex.Match(response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
                 else if (Convert.ToInt32(match.Groups[1].Value) == 6)
-                    match = Regex.Match(SocketClient.response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
+                    match = Regex.Match(response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
                 else if (Convert.ToInt32(match.Groups[1].Value) == 8)
-                    match = Regex.Match(SocketClient.response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
+                    match = Regex.Match(response, @"^allplayerpos (\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+):(\w+)$");
                 if (match.Success)
                 {
                     int counter = 2;
@@ -73,6 +109,14 @@ namespace WPFPageSwitch.Menu
                 //error
             }
             SocketClient.response = "";
+
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            SocketClient.SendString("move " + Player.ID + ":" + xTextBox.Text + ":" + yTextBox.Text);
+            Player.positionX = Convert.ToInt32(xTextBox.Text);
+            Player.positionY = Convert.ToInt32(yTextBox.Text);
 
         }
     }

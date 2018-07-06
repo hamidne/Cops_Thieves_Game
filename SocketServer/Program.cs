@@ -105,5 +105,44 @@ namespace SocketServer
             HandleCommand.Handle(current, Users, text);
             current.BeginReceive(Buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
         }
+
+        public static void ChangeTurn(int id)
+        {
+            Users[id].ClearTurn();
+            if (Users[id].Type == true)
+            {
+                int i = id;
+                bool changed = false;
+                while(!changed)
+                {
+                    if (Users[i].Type == false)
+                    {
+                        Users[i].SetTurn();
+                        changed = true;
+                    }
+                    i++;
+                    if (i == numberOfPlayers)
+                        i = 0;
+                }
+
+            } 
+            else if (Users[id].Type == false)
+            {
+                int i = id;
+                bool changed = false;
+                while (!changed)
+                {
+                    if (Users[i].Type == true)
+                    {
+                        Users[i].SetTurn();
+                        changed = true;
+                    }
+                    i++;
+                    if (i == numberOfPlayers)
+                        i = 0;
+                }
+
+            }
+        }
     }
 }

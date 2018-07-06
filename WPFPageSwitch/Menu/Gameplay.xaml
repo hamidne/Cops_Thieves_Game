@@ -8,6 +8,11 @@
              d:DesignHeight="500" d:DesignWidth="750">
     <Grid Background="White">
         <Label x:Name="label" Content="" HorizontalAlignment="Left" Height="60" Margin="128,53,0,0" VerticalAlignment="Top" Width="345"/>
+        <TextBox x:Name="xTextBox" HorizontalAlignment="Left" Height="56" Margin="244,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92"/>
+        <TextBox x:Name="yTextBox" HorizontalAlignment="Left" Height="56" Margin="400,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+        <Button x:Name="button" Content="Set" HorizontalAlignment="Left" Height="30" Margin="327,270,0,0" VerticalAlignment="Top" Width="97" Click="button_Click"/>
+        <Label x:Name="label1" Content="X" HorizontalAlignment="Left" Margin="183,192,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1_Copy" Content="Y" HorizontalAlignment="Left" Margin="363,192,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
