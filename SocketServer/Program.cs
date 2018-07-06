@@ -13,9 +13,13 @@ namespace SocketServer
         private static List<User> Users = new List<User>();
         private static readonly byte[] Buffer = new byte[BUFFER_SIZE];
         private static readonly List<Socket> ClientSockets = new List<Socket>();
-
         private static readonly Socket ServerSocket =
             new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        public static int[,] playGround;
+        public static int width, height;
+        public static int numberOfPlayers;
+
 
         static void Main()
         {

@@ -1,0 +1,20 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="WPFPageSwitch.Register"
+	x:Name="UserControl"
+	d:DesignWidth="800" d:DesignHeight="600">
+	<Grid x:Name="LayoutRoot" Background="White">
+		<TextBlock x:Name="usernameTextBlock" HorizontalAlignment="Left" Margin="203.5,217,0,0" VerticalAlignment="Top" Width="200" Height="30" Text="Username" TextWrapping="Wrap" FontSize="18.667"/>
+		<TextBlock x:Name="password1TextBlock" HorizontalAlignment="Left" Margin="204.5,257,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="18.667" Text="Password" TextWrapping="Wrap"/>
+		<TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Margin="368.5,216,0,0" VerticalAlignment="Top" TextWrapping="Wrap" Width="200" Height="30" FontSize="18.667"/>
+		<Button x:Name="registerButton" Margin="333,0,317,230" VerticalAlignment="Bottom" Content="Register" Width="150" Height="30" FontSize="16"/>
+		<TextBlock x:Name="password2TextBlock" HorizontalAlignment="Left" Margin="204.5,298.5,0,271.5" Width="200" FontSize="18.667" Text="Re-Type Password" TextWrapping="Wrap"/>
+		<Button Height="25" HorizontalAlignment="Right" Margin="0,0,20,20" VerticalAlignment="Bottom" Width="100" Content="&lt; Back" Click="Button_Click"/>
+		<PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="369.333,257,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="18.667"/>
+		<PasswordBox x:Name="passwordBox2" HorizontalAlignment="Left" Margin="369.333,299,0,0" Width="200" FontSize="18.667" VerticalAlignment="Top" Height="30"/>
+	</Grid>
+</UserControl>

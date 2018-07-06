@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
-namespace TesT_UI
+namespace WPFPageSwitch
 {
     class Player
     {
-        public int[,] playGround;
-        public int positionX;
-        public int positionY;
-        public int ID;
-        public bool isYourTurn;
-        public bool Type;
+        public static int[,] playGround;
+        public static int playGroundWidth, playGroundHeight;
+        public static string name;
+        public static int positionX;
+        public static int positionY;
+        public static int ID;
+        public static bool isYourTurn;
+        public static bool Type;
         // Type is False -> is Thief
         // Type is True -> is Cop
 
