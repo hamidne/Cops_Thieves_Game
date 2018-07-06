@@ -60,6 +60,8 @@ namespace WPFPageSwitch.Menu
                         Player.playGround[Convert.ToInt32(match.Groups[counter + 1].Value), Convert.ToInt32(match.Groups[counter + 2].Value)] = Convert.ToInt32(match.Groups[counter].Value);
                         counter += 3;
                     }
+                    SocketClient.response = "";
+
                 }
                 else
                 {
@@ -70,6 +72,8 @@ namespace WPFPageSwitch.Menu
             {
                 //error
             }
+            SocketClient.response = "";
+
         }
     }
 }
