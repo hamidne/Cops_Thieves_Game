@@ -7,10 +7,12 @@ namespace SocketClient
 {
     class Program
     {
+        private const int PORT = 100;
         private static readonly Socket ClientSocket = new Socket
             (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        private const int PORT = 100;
+        private byte ID;
+        private string name;
 
         static void Main()
         {

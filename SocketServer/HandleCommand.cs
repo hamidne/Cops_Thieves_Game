@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using System.Net.Sockets;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SocketServer
@@ -13,6 +13,7 @@ namespace SocketServer
         private static Socket _current;
         private static List<User> _users;
 
+        // Register new commad in this method
         public static void Handle(Socket current, List<User> users, string text)
         {
             _text = text;
@@ -22,7 +23,7 @@ namespace SocketServer
             if (_text == "get time")
                 GetTimeCommand();
             else if (_text.StartsWith("connect"))
-                ConnectCommand(_text);
+                ConnectCommand();
             else if (_text.StartsWith("create"))
                 CreateGameCommand(_text);
             else
@@ -89,9 +90,9 @@ namespace SocketServer
         }
 
         // connect $username => connected $id
-        private static void ConnectCommand(string text)
+        private static void ConnectCommand()
         {
-            Match match = Regex.Match(text, @"^connect (\w+)$");
+            Match match = Regex.Match(_text, @"^connect (\w+)$");
             if (match.Success)
             {
                 if (!_users.Exists(user => user.Name == match.Groups[1].Value))
@@ -108,7 +109,6 @@ namespace SocketServer
                     SendMessage("This username is already exist plase set new username");
                     Console.WriteLine("Not accept join to game request");
                 }
-
             }
             else
             {
@@ -127,6 +127,11 @@ namespace SocketServer
         private static void SendMessage(string message)
         {
             byte[] data = Encoding.ASCII.GetBytes(message);
+
+            //for(int i = 0; i < Program.ClientSockets.Count; i++)
+            //{
+            //    Program.ClientSockets[i].Send(data);
+            //}
             _current.Send(data);
         }
     }
