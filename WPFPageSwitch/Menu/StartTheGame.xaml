@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFPageSwitch.Menu"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="750">
+             d:DesignHeight="540" d:DesignWidth="960
+             " MinHeight="540" MinWidth="960">
     <UserControl.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#373737" />
@@ -41,10 +42,11 @@
     </UserControl.Resources>
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="E:\Erfan\Projects\NetworkProject\Cops_Thieves_Game\SplashScreen\Resources\splash.jpg" Stretch="UniformToFill"></ImageBrush>
+            <ImageBrush ImageSource="file:///D:/Work/University/Cops_Thieves_Game/SplashScreen/Resources/splash.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Button x:Name="button" Content="START" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Width="200" Height="40" RenderTransformOrigin="0.338,8.7" Margin="0, 0, 0, 50" Click="button_Click"/>
-        <ProgressBar Name="progressBar" HorizontalAlignment="Left" Height="10"  VerticalAlignment="Bottom" Width="750"/>
+        <Button x:Name="button" Content="START GAME" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Width="200" Height="40" RenderTransformOrigin="0.338,8.7" Margin="0, 0, 0, 50" Click="button_Click" Background="#FF1A1A1A"/>
+        <ProgressBar Name="progressBar" HorizontalAlignment="Center" Height="5"  VerticalAlignment="Bottom" Width="960" Foreground="White" BorderBrush="#00000000" Background="#00000000" HorizontalContentAlignment="Center" BorderThickness="0" />
+
 
     </Grid>
 </UserControl>

@@ -53,7 +53,7 @@ namespace WPFPageSwitch
                 }
                 catch (SocketException) 
                 {
-                    Console.Clear();
+                    //Console.Clear();
                 }
             }
 
