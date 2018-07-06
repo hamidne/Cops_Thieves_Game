@@ -22,13 +22,14 @@
             <ComboBoxItem IsSelected="True">10</ComboBoxItem>
             <ComboBoxItem>Other</ComboBoxItem>
         </ComboBox>
-        <Button x:Name="button" Content="Create Game" HorizontalAlignment="Left" Margin="285.147,303.308,0,0" VerticalAlignment="Top" Width="204.559" Height="53.048" Click="button_Click"/>
+        <Button x:Name="CreateGameCopBtn" Content="Create Game As Cop" HorizontalAlignment="Left" Margin="285.147,303.308,0,0" VerticalAlignment="Top" Width="204.559" Height="53.048" Click="CreateGameCopBtn_Click"/>
         <ComboBox x:Name="PlaygroundY" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="355.147,198.055,0,0">
             <ComboBoxItem Content="5"/>
             <ComboBoxItem IsSelected="True" Content="10"/>
             <ComboBoxItem Content="Other"/>
         </ComboBox>
         <Label x:Name="label_Copy2" Content="X" HorizontalAlignment="Left" Height="27" Margin="335.147,198.055,0,0" VerticalAlignment="Top" Width="25.765"/>
+        <Button x:Name="CreateGameThiefBtn" Content="Create Game As Thief" HorizontalAlignment="Left" Margin="285.147,381.308,0,0" VerticalAlignment="Top" Width="204.559" Height="53.048" Click="CreateGameThiefBtn_Click"/>
 
     </Grid>
 </UserControl>

@@ -11,6 +11,7 @@ namespace WPFPageSwitch
         private static int _port;
         private static Socket _clientSocket;
         private readonly BackgroundWorker worker = new BackgroundWorker();
+        public static string response = "";
 
         public SocketClient(int port)
         {
@@ -105,7 +106,8 @@ namespace WPFPageSwitch
             Array.Copy(buffer, data, received);
             string text = Encoding.ASCII.GetString(data);
             Console.WriteLine(text);
-           
+            response = text;
+
         }
     }
 }
