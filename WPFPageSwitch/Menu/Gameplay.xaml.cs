@@ -1,32 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFPageSwitch
+namespace WPFPageSwitch.Menu
 {
-	public partial class Gameplay : UserControl, ISwitchable
-	{
-		public Gameplay()
-		{
-			InitializeComponent();
-		}
-
-        #region ISwitchable Members
-        public void UtilizeState(object state)
+    /// <summary>
+    /// Interaction logic for GamePlay.xaml
+    /// </summary>
+    public partial class GamePlay : UserControl
+    {
+        public GamePlay()
         {
-            throw new NotImplementedException();
+            InitializeComponent();
         }
-
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-        	Switcher.Switch(new MainMenu());
-        }
-        #endregion
     }
 }

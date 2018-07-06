@@ -73,7 +73,7 @@ namespace WPFPageSwitch.Menu
                 Player.positionY = Convert.ToInt32(match.Groups[3].Value);
                 Player.isYourTurn = Convert.ToBoolean(match.Groups[4].Value);
                 SocketClient.response = "";
-                //Switcher.Switch();
+                Switcher.Switch(new GamePlay());
             }
             else
             {
