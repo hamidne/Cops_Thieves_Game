@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace SocketServer
 {
@@ -70,6 +71,10 @@ namespace SocketServer
                     SendMessage("joined " + _users.Count + ":" + x + ":" + y + ":" + _users.Last().Turn + ":" + Program.width + ":" + Program.height);
                     Console.WriteLine("Accept join the game request");
                     Console.WriteLine("User " + _users.Last().Name + " join the game as " + match.Groups[2].Value + "in " + x + "," + y);
+                    if (_users.Count == Program.numberOfPlayers)
+                    {
+                        SendAllPlayerPositionInResponse();
+                    }
 
                 }
                 else
@@ -79,6 +84,27 @@ namespace SocketServer
                     Console.WriteLine("Not accept create the game request");
                 }
             }
+        }
+
+        private static void SendAllPlayerPositionInResponse()
+        {
+            Thread.Sleep(500);
+            String str = "allplayerpos " + Program.numberOfPlayers ;
+            for (int i = 0; i < Program.numberOfPlayers; i++)
+            {
+                for (int j = 0; j < Program.width; j++)
+                {
+                    for (int k = 0; k < Program.height; k++)
+                    {
+                        if (Program.playGround[j,k] == _users[i].ID) {
+                            str += ":" + _users[i].ID + ":" + j + ":" + k;
+
+                        }
+                    }
+                }
+
+            }
+            SendMessageBroadCast(str);
         }
 
         // get time => $time
@@ -212,6 +238,15 @@ namespace SocketServer
             //    Program.ClientSockets[i].Send(data);
             //}
             _current.Send(data);
+        }
+
+        private static void SendMessageBroadCast(string message)
+        {
+            byte[] data = Encoding.ASCII.GetBytes(message);
+            for (int i = 0; i < Program.ClientSockets.Count; i++)
+            {
+                Program.ClientSockets[i].Send(data);
+            }
         }
     }
 }

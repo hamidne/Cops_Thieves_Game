@@ -12,6 +12,7 @@
         public int ID { get; private set; }
         public bool Type { get; private set; }
         public bool Turn { get; private set; }
+
         public User(string name, int id, bool type, bool turn) : this()
           
         {
