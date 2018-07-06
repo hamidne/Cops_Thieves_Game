@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFPageSwitch.Menu"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="750">
-    <Grid Background="White">
-        <Button x:Name="CreateGameBtn" FontSize="40" Content="Create Game" HorizontalAlignment="Left" Margin="192,128.5,0,0" VerticalAlignment="Top" Width="307.5" Height="91.96" Click="CreateGameBtn_Click"/>
-        <Button x:Name="JoinGameBtn" FontSize="40" Content="Join Game" HorizontalAlignment="Left" Margin="192,268,0,0" VerticalAlignment="Top" Width="307.5" Height="91.96" RenderTransformOrigin="0.498,1.963" Click="JoinGameBtn_Click"/>
+             d:DesignHeight="540" d:DesignWidth="960">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="file:///D:\Work\University\Cops_Thieves_Game\Assets\Cop.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Button x:Name="CreateGameBtn" FontSize="40" Content="ایجاد بازی" HorizontalAlignment="Left" Margin="24.998,192.886,0,0" VerticalAlignment="Top" Width="202.872" Height="60.773" Click="CreateGameBtn_Click" FontFamily="IRANSans"/>
+        <Button x:Name="JoinGameBtn" FontSize="40" Content="ورود به بازی" HorizontalAlignment="Left" Margin="24.998,279.067,0,0" VerticalAlignment="Top" Width="202.872" Height="65.803" RenderTransformOrigin="0.498,1.963" Click="JoinGameBtn_Click" FontFamily="IRANSans" Background="#FFC34526"/>
 
     </Grid>
 </UserControl>
