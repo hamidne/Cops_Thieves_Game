@@ -26,8 +26,59 @@ namespace SocketServer
                 ConnectCommand();
             else if (_text.StartsWith("create"))
                 CreateGameCommand(_text);
+            else if (_text.StartsWith("want_to_join"))
+                WantToJoin();
+            else if (_text.StartsWith("join"))
+                JoinTheGameCommand(_text);
             else
                 UnknownCommand();
+        }
+
+        private static void JoinTheGameCommand(string text)
+        {
+            Match match = Regex.Match(text, @"^join (\w+):(\w+)$");
+            if (match.Success)
+            {
+                if (!_users.Exists(user => user.Name == match.Groups[1].Value))
+                {
+                    Console.WriteLine("Text is a join the game request");
+                    if (match.Groups[2].Value == "cop")
+                        _users.Add(new User(match.Groups[1].Value, _users.Count + 1, true, false));
+                    else
+                    {
+                        int thiefNum = 0;
+                        for (int i = 0; i < _users.Count; i++)
+                        {
+                            if (_users[i].Type == false)
+                                thiefNum++;
+                        }
+                        if (thiefNum == 0)
+                            _users.Add(new User(match.Groups[1].Value, _users.Count + 1, false, true));
+                        else
+                            _users.Add(new User(match.Groups[1].Value, _users.Count + 1, false, false));
+                    }
+                    //set position of the player
+                    Random rand = new Random();
+                    int x, y;
+                    do
+                    {
+                        x = rand.Next(Program.width);
+                        y = rand.Next(Program.height);
+                    }
+                    while (Program.playGround[x, y] != 0);
+                    Program.playGround[x, y] = _users.Last().ID;
+                    SendMessage("joined " + _users.Count + ":" + x + ":" + y + ":" + _users.Last().Turn + ":" + Program.width + ":" + Program.height);
+                    Console.WriteLine("Accept join the game request");
+                    Console.WriteLine("User " + _users.Last().Name + " join the game as " + match.Groups[2].Value + "in " + x + "," + y);
+
+                }
+                else
+                {
+                    Console.WriteLine("Text is a create the game request");
+                    SendMessage("This username is already created a game set new username or join the game");
+                    Console.WriteLine("Not accept create the game request");
+                }
+            }
         }
 
         // get time => $time
@@ -69,7 +120,7 @@ namespace SocketServer
                     int x = rand.Next(Program.width);
                     int y = rand.Next(Program.height);
                     Program.playGround[x, y] = _users.Last().ID;
-                    SendMessage("created " + _users.Count + ":" + x + ":" + y+":"+_users.Last().Turn);
+                    SendMessage("created " + _users.Count + ":" + x + ":" + y + ":" + _users.Last().Turn);
                     Console.WriteLine("Accept create the game request");
 
                     Console.WriteLine("User " + _users.Last().Name + " created the game as " + match.Groups[5].Value + "in " + Program.width + "X" + Program.height);
@@ -84,7 +135,7 @@ namespace SocketServer
             else
             {
                 SendMessage("Invalid parameters for create game command");
-                Console.WriteLine("Not Accept create thee game request");
+                Console.WriteLine("Not Accept create the game request");
             }
 
         }
@@ -115,6 +166,34 @@ namespace SocketServer
                 SendMessage("Invalid parameters for connect command");
                 Console.WriteLine("Accept join to game request");
             }
+        }
+
+        private static void WantToJoin()
+        {
+            Console.WriteLine("Text is a want to join the game request");
+
+            int copNum = 0, thiefNum = 0;
+            for (int i = 0; i < _users.Count; i++)
+            {
+                if (_users[i].Type == true)
+                    copNum++;
+                else
+                    thiefNum++;
+            }
+            if (copNum + thiefNum == Program.numberOfPlayers)
+            {
+                SendMessage("nothing");
+            }
+            else if (copNum == Program.numberOfPlayers / 2)
+            {
+                SendMessage("onlythief");
+            }
+            else if (thiefNum == Program.numberOfPlayers / 2)
+            {
+                SendMessage("onlycop");
+            }
+            else
+                SendMessage("both");
         }
 
         private static void UnknownCommand()

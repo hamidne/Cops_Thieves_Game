@@ -30,7 +30,7 @@ namespace WPFPageSwitch
 
 		private void newGameButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			Switcher.Switch(new Gameplay());
+			//Switcher.Switch(new GamePlay());
 		}
 
 		private void loadGameButton_Click(object sender, System.Windows.RoutedEventArgs e)

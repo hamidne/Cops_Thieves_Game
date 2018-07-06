@@ -36,7 +36,9 @@ namespace WPFPageSwitch.Menu
 
         private void JoinGameBtn_Click(object sender, RoutedEventArgs e)
         {
-           // Switcher.Switch();
+            Switcher.Switch(new JoinTheGame());
         }
+
+
     }
 }

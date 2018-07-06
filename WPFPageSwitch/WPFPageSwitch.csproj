@@ -68,11 +68,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menu\Gameplay.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Menu\GamePlay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menu\JoinTheGame.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Menu\LoadGame.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +127,12 @@
     <Compile Include="Menu\CreateGameAndJoin.xaml.cs">
       <DependentUpon>CreateGameAndJoin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Menu\GamePlay.xaml.cs">
+      <DependentUpon>GamePlay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\JoinTheGame.xaml.cs">
+      <DependentUpon>JoinTheGame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Menu\SetGameInformation.xaml.cs">
       <DependentUpon>SetGameInformation.xaml</DependentUpon>
     </Compile>
@@ -138,9 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISwitchable.cs" />
-    <Compile Include="Menu\Gameplay.xaml.cs">
-      <DependentUpon>Gameplay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Menu\LoadGame.xaml.cs">
       <DependentUpon>LoadGame.xaml</DependentUpon>
     </Compile>
