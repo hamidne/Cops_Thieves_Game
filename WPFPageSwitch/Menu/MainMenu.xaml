@@ -1,0 +1,86 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	mc:Ignorable="d"
+	x:Class="WPFPageSwitch.MainMenu"
+	d:DesignWidth="800" d:DesignHeight="600">
+	<UserControl.Resources>
+		<Storyboard x:Key="loginMouseEnter">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="loginTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1.2"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="loginTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1.2"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="registerMouseEnter">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="registerTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1.2"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="registerTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1.2"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="loginMouseLeave">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="loginTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1.2"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="loginTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1.2"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="registerMouseLeave">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="registerTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1.2"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="registerTextBlock" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1.2"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+	<UserControl.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="loginTextBlock">
+			<BeginStoryboard Storyboard="{StaticResource loginMouseEnter}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="registerTextBlock">
+			<BeginStoryboard x:Name="registerMouseEnter_BeginStoryboard" Storyboard="{StaticResource registerMouseEnter}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="loginTextBlock">
+			<BeginStoryboard x:Name="loginMouseLeave_BeginStoryboard" Storyboard="{StaticResource loginMouseLeave}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="registerTextBlock">
+			<BeginStoryboard x:Name="registerMouseLeave_BeginStoryboard" Storyboard="{StaticResource registerMouseLeave}"/>
+		</EventTrigger>
+	</UserControl.Triggers>
+	<Grid x:Name="mainMenuLayoutRoot" Background="White">
+		<Button x:Name="newGameButton" HorizontalAlignment="Left" Margin="120,0,0,218" VerticalAlignment="Bottom" Width="200" Content="New Game" Height="40" FontSize="21.333" Click="newGameButton_Click"/>
+		<Button x:Name="loadGameButton" Height="40" HorizontalAlignment="Left" Margin="120,0,0,170" VerticalAlignment="Bottom" Width="200" FontSize="21.333" Content="Load Game" Click="loadGameButton_Click"/>
+		<Button x:Name="optionButton" Height="40" HorizontalAlignment="Left" Margin="120,0,0,122" VerticalAlignment="Bottom" Width="200" FontSize="21.333" Content="Option" Click="optionButton_Click"/>
+		<TextBlock x:Name="registerTextBlock" HorizontalAlignment="Right" Margin="0,52,20,0" VerticalAlignment="Top" Text="Register" TextWrapping="Wrap" FontSize="16" Width="100" Height="25" TextAlignment="Right" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="registerTextBlock_MouseLeftButtonDown">
+			<TextBlock.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</TextBlock.RenderTransform>
+		</TextBlock>
+		<TextBlock x:Name="loginTextBlock" Height="25" HorizontalAlignment="Right" Margin="0,20,20,0" VerticalAlignment="Top" Width="100" FontSize="16" Text="Login" TextWrapping="Wrap" TextAlignment="Right" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="loginTextBlock_MouseLeftButtonDown">
+			<TextBlock.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</TextBlock.RenderTransform>
+		</TextBlock>
+	</Grid>
+</UserControl>

@@ -12,10 +12,14 @@ namespace SocketServer
         private const int BUFFER_SIZE = 2048;
         private static List<User> Users = new List<User>();
         private static readonly byte[] Buffer = new byte[BUFFER_SIZE];
-        public static readonly List<Socket> ClientSockets = new List<Socket>();
-
+        private static readonly List<Socket> ClientSockets = new List<Socket>();
         private static readonly Socket ServerSocket =
             new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        public static int[,] playGround;
+        public static int width, height;
+        public static int numberOfPlayers;
+
 
         static void Main()
         {
