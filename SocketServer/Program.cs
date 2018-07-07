@@ -12,7 +12,7 @@ namespace SocketServer
         private const int BUFFER_SIZE = 2048;
         private static List<User> Users = new List<User>();
         private static readonly byte[] Buffer = new byte[BUFFER_SIZE];
-        private static readonly List<Socket> ClientSockets = new List<Socket>();
+        public static readonly List<Socket> ClientSockets = new List<Socket>();
         private static readonly Socket ServerSocket =
             new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -104,6 +104,45 @@ namespace SocketServer
 
             HandleCommand.Handle(current, Users, text);
             current.BeginReceive(Buffer, 0, BUFFER_SIZE, SocketFlags.None, ReceiveCallback, current);
+        }
+
+        public static void ChangeTurn(int id)
+        {
+            Users[id].ClearTurn();
+            if (Users[id].Type == true)
+            {
+                int i = id;
+                bool changed = false;
+                while(!changed)
+                {
+                    if (Users[i].Type == false)
+                    {
+                        Users[i].SetTurn();
+                        changed = true;
+                    }
+                    i++;
+                    if (i == numberOfPlayers)
+                        i = 0;
+                }
+
+            } 
+            else if (Users[id].Type == false)
+            {
+                int i = id;
+                bool changed = false;
+                while (!changed)
+                {
+                    if (Users[i].Type == true)
+                    {
+                        Users[i].SetTurn();
+                        changed = true;
+                    }
+                    i++;
+                    if (i == numberOfPlayers)
+                        i = 0;
+                }
+
+            }
         }
     }
 }

@@ -71,6 +71,7 @@ namespace WPFPageSwitch.Menu
                 Player.ID = Convert.ToInt32(match.Groups[1].Value);
                 Player.positionX = Convert.ToInt32(match.Groups[2].Value);
                 Player.positionY = Convert.ToInt32(match.Groups[3].Value);
+                Player.playGround[Player.positionX, Player.positionY] = Player.ID;
                 Player.isYourTurn = Convert.ToBoolean(match.Groups[4].Value);
                 SocketClient.response = "";
                 Switcher.Switch(new GamePlay());
@@ -79,6 +80,7 @@ namespace WPFPageSwitch.Menu
             {
                 //PRINT ERROR
             }
+            SocketClient.response = "";
         }
 
           }
